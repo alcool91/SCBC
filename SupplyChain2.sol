@@ -1,4 +1,5 @@
 pragma solidity ^0.4.17;
+pragma experimental ABIEncoderV2;
 
 contract SupplyChain {
 
@@ -29,6 +30,17 @@ contract SupplyChain {
       _;
     }
 
+    function isSelfOrAdmin(SupplyChainNode a) public returns (bool) {
+        if (msg.sender == a.addr) { return true; }
+        else if (msg.sender == admin) { return true; }
+        return false;
+    }
+
+    modifier onlyThis(SupplyChainNode a)
+    { require(isSelfOrAdmin(a));
+      _;
+    }
+
     function SupplyChain() public payable {
         admin = msg.sender;
     }
@@ -47,4 +59,10 @@ contract SupplyChain {
         nodeOf[msg.sender].inventory[nodeOf[msg.sender].inventory.length-1].puf      = p;
 
     }
+
+    // function getInventory(uint a, SupplyChainNode s) public onlyThis(s) {
+    //     if (s.inevntory.length <= a) { revert; }
+    //     return s.inventory[a];
+    // }
+
 }
