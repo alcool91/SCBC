@@ -60,9 +60,34 @@ contract SupplyChain {
 
     }
 
-    // function getInventory(uint a, SupplyChainNode s) public onlyThis(s) {
-    //     if (s.inevntory.length <= a) { revert; }
-    //     return s.inventory[a];
-    // }
+    function getInventory(uint a, SupplyChainNode s) public onlyThis(s) returns (Item) {
+        if (s.inventory.length <= a) { revert(); }
+        return s.inventory[a];
+    }
+
+    function addItem(Item a, SupplyChainNode s) public payable {
+        nodeOf[msg.sender].inventory.length++;
+        nodeOf[msg.sender].inventory[nodeOf[msg.sender].inventory.length-1] = a;
+    }
+
+    function removeItem(Item a) public payable {
+        for(uint i = 0; i < nodeOf[msg.sender].inventory.length; i++) {
+            if(nodeOf[msg.sender].inventory[i].itemId == a.itemId) {
+                for(uint j = i+1; j < nodeOf[msg.sender].inventory.length; j++) {
+                    nodeOf[msg.sender].inventory[j-1]=nodeOf[msg.sender].inventory[j];
+                }
+                nodeOf[msg.sender].inventory.length--;
+            }
+        }
+    }
+
+    function passItem(uint Iid, SupplyChainNode s) public onlyThis(s) payable {
+        for(uint i = 0; i < s.inventory.length; i++) {
+            if(s.inventory[i].itemId == Iid) {
+                addItem(s.inventory[i], chain[(s.nodeId)+1]);
+                removeItem(s.inventory[i]);
+            }
+        }
+    }
 
 }
