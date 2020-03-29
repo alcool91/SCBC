@@ -1,7 +1,7 @@
 pragma solidity ^0.4.21;
 pragma experimental ABIEncoderV2;
 
-contract SupplyChain {
+contract SupplyChain2 {
 
     struct SupplyChainNode {
         address addr;
