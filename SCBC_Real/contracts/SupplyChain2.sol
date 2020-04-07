@@ -1,5 +1,7 @@
-pragma solidity ^0.4.21;
+pragma solidity >=0.4.17 <0.7.0;
 pragma experimental ABIEncoderV2;
+
+import "../../node_modules/@openzeppelin/contracts/token/ERC721/ERC721Full.sol";
 
 contract SupplyChain2 {
 
@@ -30,13 +32,13 @@ contract SupplyChain2 {
       _;
     }
 
-    function isSelfOrAdmin(SupplyChainNode a) public returns (bool) {
+    function isSelfOrAdmin(SupplyChainNode memory a) public returns (bool) {
         if (msg.sender == a.addr) { return true; }
         else if (msg.sender == admin) { return true; }
         return false;
     }
 
-    modifier onlyThis(SupplyChainNode a)
+    modifier onlyThis(SupplyChainNode memory a)
     { require(isSelfOrAdmin(a));
       _;
     }
@@ -52,7 +54,7 @@ contract SupplyChain2 {
         nodeOf[a] = chain[chain.length-1];
     }
 
-    function createItem(string i, uint id, uint[2] p) public payable onlyOrigin {
+    function createItem(string memory i, uint id, uint[2] memory p) public payable onlyOrigin {
         nodeOf[msg.sender].inventory.length++;
         nodeOf[msg.sender].inventory[nodeOf[msg.sender].inventory.length-1].itemType = i;
         nodeOf[msg.sender].inventory[nodeOf[msg.sender].inventory.length-1].itemId   = id;
@@ -60,17 +62,17 @@ contract SupplyChain2 {
 
     }
 
-    function getInventory(uint a, SupplyChainNode s) public onlyThis(s) returns (Item) {
+    function getInventory(uint a, SupplyChainNode memory s) public onlyThis(s) returns (Item memory) {
         if (s.inventory.length <= a) { revert(); }
         return s.inventory[a];
     }
 
-    function addItem(Item a, SupplyChainNode s) public payable {
+    function addItem(Item memory a, SupplyChainNode memory s) public payable {
         nodeOf[msg.sender].inventory.length++;
         nodeOf[msg.sender].inventory[nodeOf[msg.sender].inventory.length-1] = a;
     }
 
-    function removeItem(Item a) public payable {
+    function removeItem(Item memory a) public payable {
         for(uint i = 0; i < nodeOf[msg.sender].inventory.length; i++) {
             if(nodeOf[msg.sender].inventory[i].itemId == a.itemId) {
                 for(uint j = i+1; j < nodeOf[msg.sender].inventory.length; j++) {
@@ -81,7 +83,7 @@ contract SupplyChain2 {
         }
     }
 
-    function passItem(uint Iid, SupplyChainNode s) public onlyThis(s) payable {
+    function passItem(uint Iid, SupplyChainNode memory s) public onlyThis(s) payable {
         for(uint i = 0; i < s.inventory.length; i++) {
             if(s.inventory[i].itemId == Iid) {
                 addItem(s.inventory[i], chain[(s.nodeId)+1]);
