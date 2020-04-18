@@ -8,9 +8,17 @@ import { Component } from '@angular/core';
 export class HomePage {
 text ='default text';
 
-onChangeText(){
-  this.text = 'Changed!';
-}
   constructor() {}
+
+  onChangeText(){
+    this.text = 'Changed!';
+  }
+
+  goToSearch(){
+  }
+
+  mostRecentlyAdded(){
+
+  }
 
 }

@@ -1,0 +1,76 @@
+<!--Written by Evelyn Fitzpatrick-->
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>add</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  
+<ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Username</ion-card-subtitle>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <ion-input placeholder="Bob Villia" readonly></ion-input>
+    </ion-card-content>
+
+    <ion-card-header>
+      <ion-card-subtitle>Employee Number</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-input placeholder="1500" readonly></ion-input>
+    </ion-card-content>
+
+    <ion-card-header>
+        <ion-card-subtitle>Block Number</ion-card-subtitle>
+      </ion-card-header>
+  
+    <ion-card-content>
+      <ion-input placeholder="Generated from Etherium" readonly></ion-input>
+    </ion-card-content>
+
+    <ion-card-header>
+      <ion-card-subtitle>Model Number</ion-card-subtitle>
+    </ion-card-header>
+        
+    <ion-card-content>
+      <ion-input placeholder="Enter Input"></ion-input>
+    </ion-card-content>
+
+    <ion-card-header>
+        <ion-card-subtitle>Serial Number</ion-card-subtitle>
+      </ion-card-header>
+          
+    <ion-card-content>
+      <ion-input placeholder="Enter Input"></ion-input>
+    </ion-card-content>
+
+    <ion-card-header>
+        <ion-card-subtitle>Challenge Response Pairs Result:</ion-card-subtitle>
+      </ion-card-header>
+          
+    <ion-item>
+      <ion-select placeholder="empty">
+        <ion-select-option value=true>Pass</ion-select-option>
+        <ion-select-option value=false>Fail</ion-select-option>
+      </ion-select>
+    </ion-item>
+    
+  </ion-card>
+
+    <ion-fab vertical="bottom" horizontal="center">
+      <ion-card>
+
+        <!--quick note for the road, the submit button will need a (Click) Listener, right now it's just going back to home.-->
+        <ion-button routerLink = "../home">Submit</ion-button>
+        <ion-button routerLink = "../home">Cancel</ion-button>
+      </ion-card>
+    </ion-fab>
+
+
+</ion-content>
