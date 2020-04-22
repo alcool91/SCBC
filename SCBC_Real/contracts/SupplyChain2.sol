@@ -3,6 +3,18 @@ pragma experimental ABIEncoderV2;
 
 import "../../node_modules/@openzeppelin/contracts/token/ERC721/ERC721Full.sol";
 
+contract Item is ERC721Full {
+  string[]  public ids;
+
+  constructor() ERC721Full('Item', 'ITEM') public {}
+
+  function mint(string memory _item) public {
+    //
+    uint _id = ids.push(_item);
+    _mint(msg.sender, _id);
+  }
+}
+
 contract SupplyChain2 {
 
     struct SupplyChainNode {

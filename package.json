@@ -1,0 +1,30 @@
+{
+  "name": "scbc",
+  "version": "1.0.0",
+  "description": "Senior Design Project - Blockchain based supply chain security",
+  "main": "index.js",
+  "dependencies": {
+    "@openzeppelin/contracts": "^2.5.0",
+    "web3": "^1.2.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alcool91/SCBC.git"
+  },
+  "keywords": [
+    "blockchain",
+    "ethereum",
+    "supply-chain",
+    "security"
+  ],
+  "author": "Allen Williams, Evelyn Fitzpatrick, Kaodili Okwuaka, Hadeel Soliman, Olive Mukunda",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alcool91/SCBC/issues"
+  },
+  "homepage": "https://github.com/alcool91/SCBC#readme"
+}
