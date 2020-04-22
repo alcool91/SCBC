@@ -1,6 +1,1 @@
-{
-  name: "IC",
-  model_number: 1234,
-  type: "Integrated Circuit",
-  born: "12-12-2019"
-}
+{"id":"0","type":"\"IC\""}
