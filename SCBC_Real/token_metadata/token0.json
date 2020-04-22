@@ -1,0 +1,6 @@
+{
+  name: "IC",
+  model_number: 1234,
+  type: "Integrated Circuit",
+  born: "12-12-2019"
+}

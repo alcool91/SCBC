@@ -8,10 +8,12 @@ contract Item is ERC721Full {
 
   constructor() ERC721Full('Item', 'ITEM') public {}
 
-  function mint(string memory _item) public {
+  function mint(string memory _item, string memory _uri) public returns (uint){
     //
     uint _id = ids.push(_item);
     _mint(msg.sender, _id);
+    _setTokenURI(_id, _uri);
+    return _id;
   }
 }
 
