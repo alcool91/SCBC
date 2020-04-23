@@ -42,4 +42,13 @@ module.exports = function(app, db) {
         res.send("hello");
       }
     })
+    app.post("/getitemmetadata", async (req,res) => {
+      if (req.body.id == undefined) { res.send("Please include an ID in metadata requests"); }
+      else {
+        let _id  = parseInt(req.body.id);
+        let _URI = await itemInstance.methods.tokenURI(_id).call();
+        let raw_metadata = fs.readFileSync(_URI);
+        res.send(raw_metadata);
+      }
+    })
 }
