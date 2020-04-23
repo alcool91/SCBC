@@ -28,15 +28,18 @@ module.exports = function(app, db) {
       //req.body = token parameters, including name (serial #?)
       //create a json file file with token's metadata
       //web3.eth.getAccounts().then(console.log);
-      let id = await itemInstance.methods.totalSupply().call();//req.body.id.toString();
-      console.log("MESSAGE " + id);
-      let name = req.body.id;
-      let uri_path = path.join(__dirname, "../../token_metadata/token" + id +".json");
-      let data = JSON.stringify(req.body);
-      let _id = itemInstance.methods.mint(name, uri_path).send({ from: user_address, gas: 2000000 });
-      fs.writeFile(uri_path, data, (err) => {
-        if (err) throw err;
-      });
-      res.send("hello");
+      if ((req.body.name == undefined) || (req.body.description == undefined) || (req.body.image == undefined)) { res.send("Please include name, description and image in request (these can be empty strings)"); }
+      else {
+        let id = await itemInstance.methods.totalSupply().call();//req.body.id.toString();
+        console.log("MESSAGE " + id);
+        let name = req.body.name;
+        let uri_path = path.join(__dirname, "../../token_metadata/token" + id +".json");
+        let data = JSON.stringify(req.body);
+        let _id = itemInstance.methods.mint(name, uri_path).send({ from: user_address, gas: 2000000 });
+        fs.writeFile(uri_path, data, (err) => {
+          if (err) throw err;
+        });
+        res.send("hello");
+      }
     })
 }
