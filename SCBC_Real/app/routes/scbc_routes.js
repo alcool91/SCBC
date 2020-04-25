@@ -20,9 +20,12 @@ async function loadItemContract() {
   itemInstance = new web3.eth.Contract(item_abi, item_address);
   const accounts = await web3.eth.getAccounts();
   user_address = accounts[0];
+  //itemInstance.methods.ownerOf(1).call().then(console.log);
+  //itemInstance.methods.balanceOf('0xa92A5E007332Aac5D0CEe2e7090580fD1a9B7e8e').call().then(console.log);
   //console.log(user_address);
 }
 loadItemContract();
+
 module.exports = function(app, db) {
     app.post("/createitem", async (req,res) => {
       //req.body = token parameters, including name (serial #?)
@@ -50,5 +53,26 @@ module.exports = function(app, db) {
         let raw_metadata = fs.readFileSync(_URI);
         res.send(raw_metadata);
       }
+    })
+    app.post("/verifyuser", async (req, res) => {
+      let data_array = fs.readFileSync(path.join(__dirname, "../../user_data/users.txt"), 'utf8').split('\n');
+      let result = {}
+      for (i = 0; i < data_array.length; i++) {
+        data_array[i] = data_array[i].split(',');
+        if(data_array[i][0] == req.body.user) {
+          if(data_array[i][1] == req.body.user) {
+            result.verified = true;
+            result.user = req.body.user;
+            result.account = data_array[i][2];
+            result.private_key = data_array[i][3];
+          }
+          else {
+            result.verified = false;
+          }
+        }
+      }
+      console.log(result)
+      //console.log(data);
+      res.send(JSON.stringify(result));
     })
 }
