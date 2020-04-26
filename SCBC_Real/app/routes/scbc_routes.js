@@ -27,6 +27,11 @@ async function loadItemContract() {
 loadItemContract();
 
 module.exports = function(app, db) {
+    app.use(function(req, res, next) {
+      res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+      res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+      next();
+    });
     app.post("/createitem", async (req,res) => {
       //req.body = token parameters, including name (serial #?)
       //create a json file file with token's metadata
@@ -60,7 +65,7 @@ module.exports = function(app, db) {
       for (i = 0; i < data_array.length; i++) {
         data_array[i] = data_array[i].split(',');
         if(data_array[i][0] == req.body.user) {
-          if(data_array[i][1] == req.body.user) {
+          if(data_array[i][1] == req.body.password) {
             result.verified = true;
             result.user = req.body.user;
             result.account = data_array[i][2];
@@ -71,6 +76,7 @@ module.exports = function(app, db) {
           }
         }
       }
+      console.log(req.body)
       console.log(result)
       //console.log(data);
       res.send(JSON.stringify(result));
