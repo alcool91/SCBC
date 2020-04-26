@@ -13,7 +13,10 @@ text ='default text';
   onChangeText(){
     this.text = 'Changed!';
   }
-
+  isAdmin() {
+    if(!(localStorage.getItem('user') == 'admin1')) { return true; }
+    return false;
+  }
   goToSearch(){
   }
 
