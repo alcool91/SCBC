@@ -81,4 +81,23 @@ module.exports = function(app, db) {
       //console.log(data);
       res.send(JSON.stringify(result));
     })
+    app.post("/newuser", async (req, res) => {
+      let raw_data = req.body;
+      console.log(typeof raw_data);
+      //let data = JSON.parse(raw_data);
+      let data = raw_data;
+      console.log(data);
+      let user_data = fs.readFileSync(path.join(__dirname, "../../user_data/users.txt"), 'utf8').split('\n');
+      console.log(user_data);
+      user_data.pop();
+      user_data.push(`${data.user},${data.password},${data.address},${data.private_key}`);
+      user_data.push("");
+      let file_data = user_data.join('\n');
+      fs.writeFile(path.join(__dirname, '../../user_data/users.txt'), file_data, (err) => {
+        if (err) throw err;
+      });
+      console.log(user_data);
+      res.send("Received");
+
+    })
 }
