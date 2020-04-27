@@ -14,7 +14,7 @@ text ='default text';
     this.text = 'Changed!';
   }
   isAdmin() {
-    if(!(localStorage.getItem('user') == 'admin1')) { return true; }
+    if((localStorage.getItem('user') == 'admin1')) { return true; }
     return false;
   }
   goToSearch(){

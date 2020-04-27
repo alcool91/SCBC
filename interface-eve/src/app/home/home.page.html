@@ -147,7 +147,7 @@
       <!--This is the edit entry button-->
       <ion-button routerLink = "../home">Home</ion-button>
 
-      <ion-button routerLink = "../admin" [disabled]='isAdmin()'>Admin</ion-button>
+      <ion-button routerLink = "../admin" *ngIf='isAdmin()'>Admin</ion-button>
 
     </ion-fab-list>
   </ion-fab>
