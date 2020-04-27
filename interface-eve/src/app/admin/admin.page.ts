@@ -35,7 +35,7 @@ export class AdminPage implements OnInit {
     data.private_key = that._private_key;
     xhr.onreadystatechange = function() {
       if(xhr.readyState == 4) {
-        console.log(xhr.response);
+        alert(xhr.response);
       }
     }
     console.log(data);

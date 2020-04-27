@@ -8,14 +8,14 @@
 
 <ion-content>
 
-  
+
 <ion-card>
     <ion-card-header>
       <ion-card-subtitle>Username</ion-card-subtitle>
     </ion-card-header>
-  
+
     <ion-card-content>
-      <ion-input placeholder="Bob Villia" readonly></ion-input>
+      <ion-input [placeholder]="getUser()" readonly></ion-input>
     </ion-card-content>
 
     <ion-card-header>
@@ -23,51 +23,58 @@
     </ion-card-header>
 
     <ion-card-content>
-      <ion-input placeholder="1500" readonly></ion-input>
+      <ion-input [placeholder]="getAccount()" readonly></ion-input>
     </ion-card-content>
 
     <ion-card-header>
         <ion-card-subtitle>Block Number</ion-card-subtitle>
       </ion-card-header>
-  
+
     <ion-card-content>
       <ion-input placeholder="Generated from Etherium" readonly></ion-input>
     </ion-card-content>
 
     <ion-card-header>
-      <ion-card-subtitle>Model Number</ion-card-subtitle>
+      <ion-card-subtitle>Device Type</ion-card-subtitle>
     </ion-card-header>
-        
+
     <ion-card-content>
-      <ion-input placeholder="Enter Input"></ion-input>
+      <ion-input placeholder="Enter Input" (input)="onUpdateType($event)"></ion-input>
     </ion-card-content>
 
     <ion-card-header>
         <ion-card-subtitle>Serial Number</ion-card-subtitle>
       </ion-card-header>
-          
+
     <ion-card-content>
-      <ion-input placeholder="Enter Input"></ion-input>
+      <ion-input placeholder="Enter Input" (input)="onUpdateSerial($event)"></ion-input>
     </ion-card-content>
 
     <ion-card-header>
-        <ion-card-subtitle>Challenge Response Pairs Result:</ion-card-subtitle>
-      </ion-card-header>
-          
-    <ion-item>
-      <ion-select placeholder="empty">
-        <ion-select-option value=true>Pass</ion-select-option>
-        <ion-select-option value=false>Fail</ion-select-option>
-      </ion-select>
-    </ion-item>
-    
+        <ion-card-subtitle>Description</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-input (input)="onUpdateDescription($event)"></ion-input>
+      </ion-item>
+    </ion-card-content>
+
+    <ion-card-header>
+        <ion-card-subtitle>Image URI</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-input (input)="onUpdateImage($event)"></ion-input>
+      </ion-item>
+    </ion-card-content>
+
   </ion-card>
 
     <ion-fab vertical="bottom" horizontal="center">
       <ion-card>
 
         <!--quick note for the road, the submit button will need a (Click) Listener, right now it's just going back to home.-->
-        <ion-button routerLink = "../home">Submit</ion-button>
+        <ion-button (click)="addItem()">Submit</ion-button>
         <ion-button routerLink = "../home">Cancel</ion-button>
       </ion-card>
     </ion-fab>

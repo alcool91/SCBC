@@ -8,8 +8,36 @@ import { Component, OnInit } from '@angular/core';
 export class AddPage implements OnInit {
 
   constructor() { }
-
+  _serial = ''; _type=''; _image=''; _description='';
+  getUser() {
+    return localStorage.getItem('user');
+  }
+  getAccount() {
+    return localStorage.getItem('account');
+  }
   ngOnInit() {
   }
-
+  onUpdateSerial(event: Event) {
+    this._serial = <HTMLInputElement>event.target.value;
+  }
+  onUpdateType(event: Event) {
+    this._type = <HTMLInputElement>event.target.value;
+  }
+  onUpdateImage(event: Event) {
+    this._image = <HTMLInputElement>event.target.value;
+  }
+  onUpdateDescription(event: Event) {
+    this._description = <HTMLInputElement>event.target.value;
+  }
+  addItem() {
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://localhost:8000/createitem');
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function() {
+      if(xhr.readyState == 4) {
+        alert(xhr.response);
+      }
+    }
+    xhr.send(JSON.stringify({name: this._serial, type:this._type, image:this._image, description:this._description}));
+  }
 }
