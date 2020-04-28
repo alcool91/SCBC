@@ -38,44 +38,50 @@
             </div>
           </div>
           <div class="row btn-row form-group">
-            <button type="button" class="btn mt-2 btn-block btn-warning form-control col-sm-1 offset-sm-4 mb-3 option-button d-inline" (click)='addUser()'><</button>
-            <button type="button" class="btn btn-block btn-primary form-control col-sm-3 mb-3 option-button d-inline" (click)='nextFn()'>Add User</button>
+            <button type="button" class="btn mt-2 btn-block btn-warning form-control col-sm-1 offset-sm-4 mb-3 option-button d-inline" (click)='prevFn()'><</button>
+            <button type="button" class="btn btn-block btn-primary form-control col-sm-3 mb-3 option-button d-inline" (click)='addUser()'>Add User</button>
             <button type="button" class="btn btn-block btn-warning form-control col-sm-1 mb-3 option-button d-inline" (click)='nextFn()'>></button>
           </div>
           <h6 class='text-danger' id="lblFail"></h6>
         </form>
       </div>
-      <div class="col-sm-6 offset-sm-3 border border-dark text-center" *ngIf="isManageChain()">
+      <div class="col-sm-8 offset-sm-2 border border-dark text-center" *ngIf="isManageChain()">
         <h2 class="mb-0 mt-2">Manage Chain</h2>
         <img src="assets/SCBC_Logo.png" class="mt-n5 mb-n5 p-0"/>
         <form class="form-horizontal">
-          <div class="form-group form-inline offset-sm-2">
-              <label for="txtUser" class="justify-self-center col-sm-3 mr-0 pr-0 control-label">Add User: </label>
+          <div class="form-group form-inline">
+              <label for="selDesigner" class="justify-self-center col-sm-3 mr-0 pr-0 control-label">Designer: </label>
               <div class="col-sm-7 ml-0 pl-0">
-                <input type="text" name="txtUser" id="txtUser" class="form-control ml-0 pl-0 float-left" placeholder="Enter Username" (input)="onUpdateUser($event)" autofocus>
+                <select name="selDesigner" id="selDesigner" class="selectpicker form-control ml-0 pl-0 float-left" #selDesigner (change)='adjustUserList($event,0)'><option></option><option *ngFor='let fr of _free_users' [value]='_registered_users[fr]'>{{ fr }} - {{ _registered_users[fr] }}</option></select>
               </div>
           </div>
-          <div class="form-group form-inline offset-sm-2">
-            <label for="txtPass" class="justify-self-center col-sm-3 mr-0 pr-0 control-label">Password:  </label>
+          <div class="form-group form-inline">
+            <label for="selFoundry" class="justify-self-center col-sm-3 mr-0 pr-0 control-label">Foundry:  </label>
             <div class="col-sm-7 ml-0 pl-0">
-              <input type="password" name="txtPass" id="txtPass" class="form-control ml-0 pl-0 float-left" placeholder="Enter Password" (input)="onUpdatePassword($event)">
+              <select name="selFoundry" id="selFoundry" class="selectpicker form-control ml-0 pl-0 float-left" #selFoundry (change)='adjustUserList($event,1)'><option></option><option *ngFor='let fr of _free_users' [value]='_registered_users[fr]'>{{ fr }} - {{ _registered_users[fr] }}</option></select>
             </div>
           </div>
-          <div class="form-group form-inline offset-sm-2">
-            <label for="txtAddress" class="justify-self-center col-sm-3 mr-0 pr-0 control-label">Address:  </label>
+          <div class="form-group form-inline">
+            <label for="selManufacturer" class="justify-self-center col-sm-3 mr-0 pr-0 control-label">Manufacturer:  </label>
             <div class="col-sm-7 ml-0 pl-0">
-              <input type="text" name="txtAddress" id="txtAddress" class="form-control ml-0 pl-0 float-left" placeholder="Enter Address" (input)="onUpdateAddress($event)">
+              <select name="selManufacturer" id="selManufacturer" class="selectpicker form-control ml-0 pl-0 float-left" #selManufacturer (change)='adjustUserList($event,2)'><option></option><option *ngFor='let fr of _free_users' [value]='_registered_users[fr]'>{{ fr }} - {{ _registered_users[fr] }}</option></select>
             </div>
           </div>
-          <div class="form-group form-inline offset-sm-2">
-            <label for="txtPKey" class="justify-self-center col-sm-3 mr-0 pr-0 control-label">Private Key:  </label>
+          <div class="form-group form-inline">
+            <label for="selAssembler" class="justify-self-center col-sm-3 mr-0 pr-0 control-label">Assembler:  </label>
             <div class="col-sm-7 ml-0 pl-0">
-              <input type="text" name="txtPKet" id="txtPKey" class="form-control ml-0 pl-0 float-left" placeholder="Enter Address" (input)="onUpdatePrivateKey($event)">
+              <select name="selAssembler" id="selAssembler" class="selectpicker form-control ml-0 pl-0 float-left" #selAssembler (change)='adjustUserList($event,3)'><option></option><option *ngFor='let fr of _free_users' [value]='_registered_users[fr]'>{{ fr }} - {{ _registered_users[fr] }}</option></select>
+            </div>
+          </div>
+          <div class="form-group form-inline">
+            <label for="selRetailer" class="justify-self-center col-sm-3 mr-0 pr-0 control-label">Retailer:  </label>
+            <div class="col-sm-7 ml-0 pl-0">
+              <select name="selRetailer" id="selRetailer" class="selectpicker form-control ml-0 pl-0 float-left" #selRetailer (change)='adjustUserList($event,4)'><option></option><option *ngFor='let fr of _free_users' [value]='_registered_users[fr]'>{{ fr }} - {{ _registered_users[fr] }}</option></select>
             </div>
           </div>
           <div class="row btn-row form-group">
-            <button type="button" class="btn mt-2 btn-block btn-warning form-control col-sm-1 offset-sm-4 mb-3 option-button d-inline" (click)='addUser()'><</button>
-            <button type="button" class="btn btn-block btn-primary form-control col-sm-3 mb-3 option-button d-inline" (click)='nextFn()'>Add User</button>
+            <button type="button" class="btn mt-2 btn-block btn-warning form-control col-sm-1 offset-sm-4 mb-3 option-button d-inline" (click)='prevFn()'><</button>
+            <button type="button" class="btn btn-block btn-primary form-control col-sm-3 mb-3 option-button d-inline" (click)='addUser()'>Save Changes</button>
             <button type="button" class="btn btn-block btn-warning form-control col-sm-1 mb-3 option-button d-inline" (click)='nextFn()'>></button>
           </div>
           <h6 class='text-danger' id="lblFail"></h6>
