@@ -7,9 +7,10 @@
 <ion-content>
   <div class="container-fluid">
     <div class="row h-25 mb-5"></div>
-    <div class="row" >
-      <div class="col-sm-6 offset-sm-3 border border-dark text-center">
-        <h2 class="mb-0 mt-2">Admin</h2>
+    <div class="row">
+      <!--<ng-template *ngIf='isAddUser()'>-->
+      <div class="col-sm-6 offset-sm-3 border border-dark text-center" *ngIf="isAddUser()">
+        <h2 class="mb-0 mt-2">Add User</h2>
         <img src="assets/SCBC_Logo.png" class="mt-n5 mb-n5 p-0"/>
         <form class="form-horizontal">
           <div class="form-group form-inline offset-sm-2">
@@ -36,10 +37,51 @@
               <input type="text" name="txtPKet" id="txtPKey" class="form-control ml-0 pl-0 float-left" placeholder="Enter Address" (input)="onUpdatePrivateKey($event)">
             </div>
           </div>
-          <button type="button" class="btn btn-primary mb-3" (click)='addUser()'>Add User</button>
+          <div class="row btn-row form-group">
+            <button type="button" class="btn mt-2 btn-block btn-warning form-control col-sm-1 offset-sm-4 mb-3 option-button d-inline" (click)='addUser()'><</button>
+            <button type="button" class="btn btn-block btn-primary form-control col-sm-3 mb-3 option-button d-inline" (click)='nextFn()'>Add User</button>
+            <button type="button" class="btn btn-block btn-warning form-control col-sm-1 mb-3 option-button d-inline" (click)='nextFn()'>></button>
+          </div>
           <h6 class='text-danger' id="lblFail"></h6>
         </form>
       </div>
+      <div class="col-sm-6 offset-sm-3 border border-dark text-center" *ngIf="isManageChain()">
+        <h2 class="mb-0 mt-2">Manage Chain</h2>
+        <img src="assets/SCBC_Logo.png" class="mt-n5 mb-n5 p-0"/>
+        <form class="form-horizontal">
+          <div class="form-group form-inline offset-sm-2">
+              <label for="txtUser" class="justify-self-center col-sm-3 mr-0 pr-0 control-label">Add User: </label>
+              <div class="col-sm-7 ml-0 pl-0">
+                <input type="text" name="txtUser" id="txtUser" class="form-control ml-0 pl-0 float-left" placeholder="Enter Username" (input)="onUpdateUser($event)" autofocus>
+              </div>
+          </div>
+          <div class="form-group form-inline offset-sm-2">
+            <label for="txtPass" class="justify-self-center col-sm-3 mr-0 pr-0 control-label">Password:  </label>
+            <div class="col-sm-7 ml-0 pl-0">
+              <input type="password" name="txtPass" id="txtPass" class="form-control ml-0 pl-0 float-left" placeholder="Enter Password" (input)="onUpdatePassword($event)">
+            </div>
+          </div>
+          <div class="form-group form-inline offset-sm-2">
+            <label for="txtAddress" class="justify-self-center col-sm-3 mr-0 pr-0 control-label">Address:  </label>
+            <div class="col-sm-7 ml-0 pl-0">
+              <input type="text" name="txtAddress" id="txtAddress" class="form-control ml-0 pl-0 float-left" placeholder="Enter Address" (input)="onUpdateAddress($event)">
+            </div>
+          </div>
+          <div class="form-group form-inline offset-sm-2">
+            <label for="txtPKey" class="justify-self-center col-sm-3 mr-0 pr-0 control-label">Private Key:  </label>
+            <div class="col-sm-7 ml-0 pl-0">
+              <input type="text" name="txtPKet" id="txtPKey" class="form-control ml-0 pl-0 float-left" placeholder="Enter Address" (input)="onUpdatePrivateKey($event)">
+            </div>
+          </div>
+          <div class="row btn-row form-group">
+            <button type="button" class="btn mt-2 btn-block btn-warning form-control col-sm-1 offset-sm-4 mb-3 option-button d-inline" (click)='addUser()'><</button>
+            <button type="button" class="btn btn-block btn-primary form-control col-sm-3 mb-3 option-button d-inline" (click)='nextFn()'>Add User</button>
+            <button type="button" class="btn btn-block btn-warning form-control col-sm-1 mb-3 option-button d-inline" (click)='nextFn()'>></button>
+          </div>
+          <h6 class='text-danger' id="lblFail"></h6>
+        </form>
+      </div>
+      <!--</ng-template>-->
     </div>
     <div class="row h-25 mb-5"></div>
   </div>

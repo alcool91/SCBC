@@ -9,6 +9,8 @@ export class AdminPage implements OnInit {
 
   constructor() { }
   _user=''; _password=''; _address=''; _private_key='';
+  _current_fn=0;
+  NUMFUNCTIONS=2
   ngOnInit() {
   }
   onUpdateUser(event: Event) {
@@ -22,6 +24,20 @@ export class AdminPage implements OnInit {
   }
   onUpdatePrivateKey(event: Event) {
     this._private_key = <HTMLInputElement>event.target.value;
+  }
+  getCurrentFn() {
+    return this._current_fn;
+  }
+  isAddUser() {
+    console.log(this.getCurrentFn() == 0)
+    return (this.getCurrentFn() == 0)
+  }
+  isManageChain() {
+    console.log(this.getCurrentFn() == 1)
+    return (this.getCurrentFn() == 1)
+  }
+  nextFn() {
+    this._current_fn = (((this._current_fn + 1) % this.NUMFUNCTIONS) + this.NUMFUNCTIONS) % this.NUMFUNCTIONS;
   }
   addUser() {
     const that = this;
