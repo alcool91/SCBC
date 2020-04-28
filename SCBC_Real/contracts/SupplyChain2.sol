@@ -57,6 +57,13 @@ contract SupplyChain2 {
         else if (msg.sender == admin) { return true; }
         return false;
     }
+    function getChain() public returns (address[] memory) {
+      address[] memory toReturn = new address[](CHAINSIZE);
+      for(uint i = 0; i < CHAINSIZE; i++){
+        toReturn[i] = chain[i].addr;
+      }
+      return toReturn;
+    }
 
     modifier onlyThis(address a)
     { require(isSelfOrAdmin(a));

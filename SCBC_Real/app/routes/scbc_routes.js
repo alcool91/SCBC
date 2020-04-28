@@ -14,6 +14,7 @@ let item_abi_file, item_abi_data, item_abi, itemInstance, networkID;
 let supply_chain_abi_file, supply_chain_abi_data, supply_chain_abi, supplyChainInstance;
 var user_address;
 
+
 async function loadItemContract() {
   item_abi_file = path.join(__dirname, "../../build/contracts/Item.json");
   item_abi_data = JSON.parse(fs.readFileSync(item_abi_file));
@@ -37,6 +38,9 @@ async function loadSupplyChainContract() {
   supplyChainInstance = new web3.eth.Contract(supply_chain_abi, supply_chain_address);
 
 }
+//These should normally be commented out, but are needed for testing APIs
+loadItemContract();
+loadSupplyChainContract();
 
 
 module.exports = function(app, db) {
@@ -124,5 +128,20 @@ module.exports = function(app, db) {
       console.log(user_data);
       res.send("User Added Successfully!");
 
+    })
+    app.post("/getusers", async (req, res) => {
+      let data_array = fs.readFileSync(path.join(__dirname, "../../user_data/users.txt"), 'utf8').split('\n');
+      let result = {};
+      for(var i = 0; i < data_array.length; i++) {
+        data_array[i] = data_array[i].split(',');
+        result[data_array[i][0]] = data_array[i][2];
+      }
+      res.send(JSON.stringify(result));
+    })
+    app.post("/getchain", async (req, res) => {
+      let result;
+      result = await supplyChainInstance.methods.getChain().call();
+      console.log(result);
+      res.send(JSON.stringify(result))
     })
 }
