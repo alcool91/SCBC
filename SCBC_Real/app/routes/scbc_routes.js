@@ -39,8 +39,8 @@ async function loadSupplyChainContract() {
 
 }
 //These should normally be commented out, but are needed for testing APIs
-loadItemContract();
-loadSupplyChainContract();
+// loadItemContract();
+// loadSupplyChainContract();
 
 
 module.exports = function(app, db) {
@@ -143,5 +143,13 @@ module.exports = function(app, db) {
       result = await supplyChainInstance.methods.getChain().call();
       console.log(result);
       res.send(JSON.stringify(result))
+    })
+    app.post("/registeruser", async (req, res) => {
+      let data = req.body;
+      //let data = JSON.parse(raw_data);
+      supplyChainInstance.methods.register(data.address, data.index).send( {from: user_address, gas: 2000000 });
+      result = await supplyChainInstance.methods.getChain().call();
+      console.log(result);
+      res.send("User at " + data.address + " successfully registered at position " + data.index);
     })
 }

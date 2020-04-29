@@ -74,12 +74,12 @@ contract SupplyChain2 {
         admin = msg.sender;
     }
 
-    function register(address a, uint id, uint loc) public payable onlyAdmin {
+    function register(address a, uint loc) public payable onlyAdmin {
         //chain.length++;
         //chain[chain.length-1].addr      = a;
         //chain[chain.length-1].nodeId    = id;
         chain[loc].addr      = a;
-        chain[loc].nodeId    = id;
+        chain[loc].nodeId    = loc;
         nodeOf[a] = chain[loc];
     }
 
