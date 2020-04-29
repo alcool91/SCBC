@@ -52,36 +52,36 @@
           <div class="form-group form-inline">
               <label for="selDesigner" class="justify-self-center col-sm-3 mr-0 pr-0 control-label">Designer: </label>
               <div class="col-sm-7 ml-0 pl-0">
-                <select name="selDesigner" id="selDesigner" class="selectpicker form-control ml-0 pl-0 float-left" #selDesigner (change)='adjustUserList($event,0)'><option></option><option *ngFor='let fr of _free_users' [value]='_registered_users[fr]'>{{ fr }} - {{ _registered_users[fr] }}</option></select>
+                <select name="selDesigner" id="selDesigner" class="selectpicker form-control ml-0 pl-0 float-left" #selDesigner (change)='adjustUserList($event,0)'><option *ngIf="_chain[0] != '0x0000000000000000000000000000000000000000'" selected>{{ _users_from_address[_chain[0]] }} - {{ _chain[0] }}</option><option *ngIf="_chain[0] == '0x0000000000000000000000000000000000000000'"></option><option *ngFor='let fr of _free_users' [value]='_registered_users[fr]'>{{ fr }} - {{ _registered_users[fr] }}</option></select>
               </div>
           </div>
           <div class="form-group form-inline">
             <label for="selFoundry" class="justify-self-center col-sm-3 mr-0 pr-0 control-label">Foundry:  </label>
             <div class="col-sm-7 ml-0 pl-0">
-              <select name="selFoundry" id="selFoundry" class="selectpicker form-control ml-0 pl-0 float-left" #selFoundry (change)='adjustUserList($event,1)'><option></option><option *ngFor='let fr of _free_users' [value]='_registered_users[fr]'>{{ fr }} - {{ _registered_users[fr] }}</option></select>
+              <select name="selFoundry" id="selFoundry" class="selectpicker form-control ml-0 pl-0 float-left" #selFoundry (change)='adjustUserList($event,1)'><option *ngIf="_chain[1] != '0x0000000000000000000000000000000000000000'" selected>{{ _users_from_address[_chain[1]] }} - {{ _chain[1] }}</option><option *ngIf="_chain[1] == '0x0000000000000000000000000000000000000000'"></option><option *ngFor='let fr of _free_users' [value]='_registered_users[fr]'>{{ fr }} - {{ _registered_users[fr] }}</option></select>
             </div>
           </div>
           <div class="form-group form-inline">
             <label for="selManufacturer" class="justify-self-center col-sm-3 mr-0 pr-0 control-label">Manufacturer:  </label>
             <div class="col-sm-7 ml-0 pl-0">
-              <select name="selManufacturer" id="selManufacturer" class="selectpicker form-control ml-0 pl-0 float-left" #selManufacturer (change)='adjustUserList($event,2)'><option></option><option *ngFor='let fr of _free_users' [value]='_registered_users[fr]'>{{ fr }} - {{ _registered_users[fr] }}</option></select>
+              <select name="selManufacturer" id="selManufacturer" class="selectpicker form-control ml-0 pl-0 float-left" #selManufacturer (change)='adjustUserList($event,2)'><option *ngIf="_chain[2] != '0x0000000000000000000000000000000000000000'" selected>{{ _users_from_address[_chain[2]] }} - {{ _chain[2] }}</option><option *ngIf="_chain[2] == '0x0000000000000000000000000000000000000000'"></option><option *ngFor='let fr of _free_users' [value]='_registered_users[fr]'>{{ fr }} - {{ _registered_users[fr] }}</option></select>
             </div>
           </div>
           <div class="form-group form-inline">
             <label for="selAssembler" class="justify-self-center col-sm-3 mr-0 pr-0 control-label">Assembler:  </label>
             <div class="col-sm-7 ml-0 pl-0">
-              <select name="selAssembler" id="selAssembler" class="selectpicker form-control ml-0 pl-0 float-left" #selAssembler (change)='adjustUserList($event,3)'><option></option><option *ngFor='let fr of _free_users' [value]='_registered_users[fr]'>{{ fr }} - {{ _registered_users[fr] }}</option></select>
+              <select name="selAssembler" id="selAssembler" class="selectpicker form-control ml-0 pl-0 float-left" #selAssembler (change)='adjustUserList($event,3)'><option *ngIf="_chain[3] != '0x0000000000000000000000000000000000000000'" selected>{{ _users_from_address[_chain[3]] }} - {{ _chain[3] }}</option><option *ngIf="_chain[3] == '0x0000000000000000000000000000000000000000'"></option><option *ngFor='let fr of _free_users' [value]='_registered_users[fr]'>{{ fr }} - {{ _registered_users[fr] }}</option></select>
             </div>
           </div>
           <div class="form-group form-inline">
             <label for="selRetailer" class="justify-self-center col-sm-3 mr-0 pr-0 control-label">Retailer:  </label>
             <div class="col-sm-7 ml-0 pl-0">
-              <select name="selRetailer" id="selRetailer" class="selectpicker form-control ml-0 pl-0 float-left" #selRetailer (change)='adjustUserList($event,4)'><option></option><option *ngFor='let fr of _free_users' [value]='_registered_users[fr]'>{{ fr }} - {{ _registered_users[fr] }}</option></select>
+              <select name="selRetailer" id="selRetailer" class="selectpicker form-control ml-0 pl-0 float-left" #selRetailer (change)='adjustUserList($event,4)'><option *ngIf="_chain[4] != '0x0000000000000000000000000000000000000000'" selected>{{ _users_from_address[_chain[4]] }} - {{ _chain[4] }}</option><option *ngIf="_chain[4] == '0x0000000000000000000000000000000000000000'"></option><option *ngFor='let fr of _free_users' [value]='_registered_users[fr]'>{{ fr }} - {{ _registered_users[fr] }}</option></select>
             </div>
           </div>
           <div class="row btn-row form-group">
             <button type="button" class="btn mt-2 btn-block btn-warning form-control col-sm-1 offset-sm-4 mb-3 option-button d-inline" (click)='prevFn()'><</button>
-            <button type="button" class="btn btn-block btn-primary form-control col-sm-3 mb-3 option-button d-inline" (click)='addUser()'>Save Changes</button>
+            <button type="button" class="btn btn-block btn-primary form-control col-sm-3 mb-3 option-button d-inline">Save Changes</button>
             <button type="button" class="btn btn-block btn-warning form-control col-sm-1 mb-3 option-button d-inline" (click)='nextFn()'>></button>
           </div>
           <h6 class='text-danger' id="lblFail"></h6>

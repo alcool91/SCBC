@@ -17,7 +17,7 @@ export class AdminPage implements OnInit, AfterViewInit {
   _user=''; _password=''; _address=''; _private_key='';
   _current_fn=0;
   NUMFUNCTIONS=2
-  _chain=[]; _registered_users={}; _users_on_chain=[]; _free_users=[];
+  _chain=[]; _registered_users={}; _users_from_address={}; _users_on_chain=[]; _free_users=[];
   ngOnInit() {
 
 
@@ -65,6 +65,7 @@ export class AdminPage implements OnInit, AfterViewInit {
         console.log(data);
         that._registered_users=data;
         for (let key in data) {
+          that._users_from_address[data[key]] = key;
           let on_chain = false;
           for(var i = 0; i < that._chain.length; i++) {
             if(key.value == that._chain[i]) {
@@ -76,12 +77,14 @@ export class AdminPage implements OnInit, AfterViewInit {
             that._free_users.push(key);
           }
         }
-        console.log(that._free_users);
       }
     }
     xhr.send();
   }
-  adjustUserList(event: Event, index) {
+  adjustUserList(event: Event, _index) {
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://localhost:8000/registeruser');
+    xhr.setRequestHeader('Content-Type', 'application/json');
     let raw_event_data = <HTMLSelectElement>event.target.value;
     for(var i = 0; i < this._free_users.length; i++) {
       if(this._registered_users[this._free_users[i]] == raw_event_data) {
@@ -89,8 +92,13 @@ export class AdminPage implements OnInit, AfterViewInit {
         this._users_on_chain.push(t);
       }
     }
-    this._chain[index] = raw_event_data;
-    console.log(this._chain);
+    xhr.onreadystatechange = function() {
+      if(xhr.readyState == 4) {
+        console.log(xhr.response);
+      }
+    }
+    xhr.send(JSON.stringify({ address: raw_event_data, index: _index}));
+    this._chain[_index] = raw_event_data;
   }
   getCurrentFn() {
     return this._current_fn;
@@ -127,6 +135,9 @@ export class AdminPage implements OnInit, AfterViewInit {
     data.private_key = that._private_key;
     xhr.onreadystatechange = function() {
       if(xhr.readyState == 4) {
+        that._registered_users[data.user] = data.address;
+        that._users_from_address[data.address] = data.user;
+        that._free_users.push(data.user);
         alert(xhr.response);
       }
     }
