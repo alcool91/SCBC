@@ -176,11 +176,16 @@ module.exports = function(app, db) {
     })
     app.post("/flagitem", async (req, res) => {
       let _id = req.body.id;
-      // console.log(req)
-      // console.log("req.body = ")
-      // console.log(req.body);
-      // console.log(_id);
-      supplyChainInstance.methods.flagItem(user_address, parseInt(_id)).send( { from: user_address });
+      await supplyChainInstance.methods.flagItem(user_address, parseInt(_id)).send( { from: user_address });
       res.send("Successfully flagged item");
     })
+    app.post("/transferitem", async (req, res) => {
+      let _id = req.body.id;
+      let _to_address = req.body.to;
+      let _from_address = req.body.from;
+      await itemInstance.methods.transferFrom(_from_address,_to_address,_id).send( {from: user_address, gas: 2000000 });
+      await supplyChainInstance.methods.passItem(_from_address, _to_address, _id).send( {from: user_address, gas: 2000000 });
+      res.send("successfully transferred item to " + _to_address);
+    })
+
 }

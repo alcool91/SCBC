@@ -146,13 +146,16 @@ contract SupplyChain2 {
     //     }
     // }
 
-    // function passItem(uint Iid, SupplyChainNode memory s) public onlyThis(s) payable {
-    //     for(uint i = 0; i < s.inventory.length; i++) {
-    //         if(s.inventory[i].itemId == Iid) {
-    //             addItem(s.inventory[i], chain[(s.nodeId)+1]);
-    //             removeItem(s.inventory[i]);
-    //         }
-    //     }
-    // }
+    function passItem(address s, address t, uint id) public onlyThis(s) payable {
+        for(uint i = 0; i < nodeOf[s].inventory.length; i++) {
+            if(nodeOf[s].inventory[i] == id) {
+              nodeOf[t].received.length++;
+              nodeOf[t].received[nodeOf[t].received.length-1] = id;
+              nodeOf[s].inventory[i] = nodeOf[s].inventory[nodeOf[s].inventory.length-1];
+              delete nodeOf[s].inventory[nodeOf[s].inventory.length-1];
+              nodeOf[s].inventory.length--;
+            }
+        }
+    }
 
 }
