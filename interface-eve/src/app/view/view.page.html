@@ -9,47 +9,47 @@
         <ion-card-header>
           <ion-card-subtitle>Username</ion-card-subtitle>
         </ion-card-header>
-      
+
         <ion-card-content>
-          <ion-input placeholder="Bob Villia" readonly></ion-input>
+          <ion-input [placeholder]="getUser()" readonly></ion-input>
         </ion-card-content>
-    
+
         <ion-card-header>
-          <ion-card-subtitle>Employee Number</ion-card-subtitle>
+          <ion-card-subtitle>Account Number</ion-card-subtitle>
         </ion-card-header>
-    
+
         <ion-card-content>
-          <ion-input placeholder="1500" readonly></ion-input>
+          <ion-input [placeholder]="getAccount()" readonly></ion-input>
         </ion-card-content>
-    
+
         <ion-card-header>
             <ion-card-subtitle>Block Number</ion-card-subtitle>
           </ion-card-header>
-      
+
         <ion-card-content>
           <ion-input placeholder="Generated from Etherium" readonly></ion-input>
         </ion-card-content>
-    
+
         <ion-card-header>
           <ion-card-subtitle>Model Number</ion-card-subtitle>
         </ion-card-header>
-            
+
         <ion-card-content>
           <ion-input placeholder="Some Model" readonly></ion-input>
         </ion-card-content>
-    
+
         <ion-card-header>
             <ion-card-subtitle>Serial Number</ion-card-subtitle>
           </ion-card-header>
-              
+
         <ion-card-content>
           <ion-input placeholder="Some Serial" readonly></ion-input>
         </ion-card-content>
-    
+
         <ion-card-header>
             <ion-card-subtitle>Challenge Response Pairs Result:</ion-card-subtitle>
         </ion-card-header>
-              
+
         <ion-item>
           <ion-select placeholder="empty" readonly>
             <ion-select-option value=true>Pass</ion-select-option>
@@ -67,14 +67,14 @@
           <ion-fab-list side="start">
             <!--This is the search button-->
             <ion-button routerLink = "../search">Search</ion-button>
-      
+
             <!--This is the button to add a new entry-->
             <ion-button routerLink = "../add">Add</ion-button>
-      
+
             <!--This is the edit entry button-->
             <ion-button routerLink = "../home">Home</ion-button>
-      
+
           </ion-fab-list>
         </ion-fab>
-    
+
 </ion-content>

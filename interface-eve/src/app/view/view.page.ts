@@ -9,7 +9,17 @@ export class ViewPage implements OnInit {
 
   constructor() { }
 
+
+  getUser() {
+    return localStorage.getItem('user');
+  }
+  getAccount() {
+    return localStorage.getItem('account');
+  }
   ngOnInit() {
   }
-
+  isAdmin() {
+    if((localStorage.getItem('user') == 'admin1')) { return true; }
+    return false;
+  }
 }

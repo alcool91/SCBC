@@ -1,5 +1,3 @@
-<!--Written by Evelyn Fitzpatrick-->
-
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
@@ -11,177 +9,104 @@
 
 
 <ion-content [fullscreen]="true">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark p-0">
+  <a class="navbar-brand"><img src="/assets/SCBC_Logo.png" class="mn-5 p-0 img-logo"/></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-  <ion-fab vertical="top" horizontal="end" edge slot="fixed">
-      <ion-fab-button>
-        <ion-icon name="person"></ion-icon>
-        <ion-menu side="start" menuId="first" contentId="main">
-            <ion-header>
-              <ion-toolbar color="primary">
-                <ion-title>Start Menu</ion-title>
-              </ion-toolbar>
-            </ion-header>
-            <ion-content>
-              <ion-list>
-                <ion-item>Menu Item</ion-item>
-                <ion-item>Menu Item</ion-item>
-                <ion-item>Menu Item</ion-item>
-                <ion-item>Menu Item</ion-item>
-                <ion-item>Menu Item</ion-item>
-              </ion-list>
-            </ion-content>
-          </ion-menu>
-      </ion-fab-button>
-    </ion-fab>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="#" [routerLink] = "['../add']">Add Item</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link">Manage Inventories</a>
+      </li>
+      <li class="nav-item" *ngIf="isAdmin()">
+        <a class="nav-link" [routerLink] = "['../admin']">Admin</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<!--
+TO DO:
+  Create API to get the various inventories for each entity in the supply chain
+  Display the items in their respective tables. Ideally make tables scroll and have a minimum size for uniformity
+  Create buttons for the appropriate actions in each Inventory
+  -> Receivd = Confirm receipt, Flag item
+  -> Inventory = Transfer item, Flag item
+  -> Flagged = Notify Admin?
 
-
-  <!--this is the user card at the top-->
-  <ion-card>
-    <ion-card-header>
-      <ion-card-subtitle>User information</ion-card-subtitle>
-
-      <!--this should automatically update with the user's information-->
-      <ion-card-title>Welcome User!</ion-card-title>
-    </ion-card-header>
-
-    <ion-card-content>
-      last login: <br>
-      other user information
-    </ion-card-content>
-    <ion-button fill="outline" slot="end">View</ion-button>
-  </ion-card>
-
-  <ion-card>
-    <ion-item>
-      <ion-icon name="chevron-forward"></ion-icon>
-
-      <!-- this needs to gather the most recent information on an added component-->
-      <ion-label>Most recntly added</ion-label>
-
-      <!--This button needs to bring the user to the option-->
-      <ion-button fill="outline" slot="end" routerLink="../view">View</ion-button>
-    </ion-item>
-
-    <ion-card-content>
-      Most relevant information about the most recently added
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card>
-      <ion-item>
-        <ion-icon name="chevron-forward"></ion-icon>
-
-        <!-- this needs to gather the most recent information on an added component-->
-        <ion-label>Second most recntly added</ion-label>
-
-        <!--This button needs to bring the user to the option-->
-        <ion-button fill="outline" slot="end" routerLink="../view">View</ion-button>
-      </ion-item>
-
-      <ion-card-content>
-        Most relevant information about the second most recently added
-      </ion-card-content>
-    </ion-card>
-
-    <ion-card>
-        <ion-item>
-          <ion-icon name="chevron-forward"></ion-icon>
-
-          <!-- this needs to gather the most recent information on an added component-->
-          <ion-label>Third most recntly added</ion-label>
-
-          <!--This button needs to bring the user to the option-->
-          <ion-button fill="outline" slot="end" routerLink="../view">View</ion-button>
-        </ion-item>
-
-        <ion-card-content>
-          Most relevant information about the third most recently added
-        </ion-card-content>
-      </ion-card>
-
-      <ion-card>
-          <ion-item>
-            <ion-icon name="chevron-forward"></ion-icon>
-
-            <!-- this needs to gather the most recent information on an added component-->
-            <ion-label>Fourth most recntly added</ion-label>
-
-            <!--This button needs to bring the user to the option-->
-            <ion-button fill="outline" slot="end" routerLink="../view">View</ion-button>
-          </ion-item>
-
-          <ion-card-content>
-            Most relevant information about the fourth most recently added
-          </ion-card-content>
-        </ion-card>
-
-        <ion-card>
-            <ion-item>
-              <ion-icon name="chevron-forward"></ion-icon>
-
-              <!-- this needs to gather the most recent information on an added component-->
-              <ion-label>Fifth most recntly added</ion-label>
-
-              <!--This button needs to bring the user to the option-->
-              <ion-button fill="outline" slot="end" routerLink="../view">View</ion-button>
-            </ion-item>
-
-            <ion-card-content>
-              Most relevant information about the fifth most recently added
-            </ion-card-content>
-          </ion-card>
+  Fill in the links in the navbar
 
 
-  <!-- fab placed to the bottom end -->
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button>
-      <ion-icon name="menu"></ion-icon>
-    </ion-fab-button>
-    <ion-fab-list side="start">
-      <!--This is the search button-->
-      <ion-button routerLink = "../search">Search</ion-button>
+  Restyle Add Page?
+-->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-4">
+      <!-- Received -->
+      <table class="center table table-dark table-bordered mb-0 mt-2">
+        <thead>
+          <tr>
+            <td class="text-center">Received Items</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor = "let n of _numbers">
+            <td *ngIf="_my_received[n] != undefined">{{ getItemMetaData(_my_received[n]).type }}: {{ getItemMetaData(_my_received[n]).name }}</td>
+            <td *ngIf="_my_received[n] == undefined">&nbsp;</td>
+          </tr>
+        </tbody>
 
-      <!--This is the button to add a new entry-->
-      <ion-button routerLink = "../add">Add</ion-button>
+      </table>
+    </div>
 
-      <!--This is the edit entry button-->
-      <ion-button routerLink = "../home">Home</ion-button>
+    <div class="col-sm-4">
+      <!-- Inventory -->
 
-      <ion-button routerLink = "../admin" *ngIf='isAdmin()'>Admin</ion-button>
+      <table class="center table table-dark table-bordered mb-0 mt-2">
+        <thead>
+          <tr>
+            <td class="text-center">Inventory</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor = "let n of _numbers">
+            <td *ngIf = "_my_inventory[n] != undefined">{{ getItemMetaData(_my_inventory[n]).type }}: {{ getItemMetaData(_my_inventory[n]).name }} <button type="button" class="btn btn-xs btn-danger ml-6">X</button><button type="button" class="btn btn-xs btn-primary ml-1">></button></td>
+            <td *ngIf = "_my_inventory[n] == undefined">&nbsp;</td>
+          </tr>
+        </tbody>
 
-    </ion-fab-list>
-  </ion-fab>
+      </table>
+    </div>
 
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <div class="col-sm-4">
+      <!-- Flagged -->
+      <table class="center table table-dark table-bordered mb-0 mt-2">
+        <thead>
+          <tr>
+            <td class="text-center">Flagged Items</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor = "let n of _numbers">
+            <td *ngIf = "_my_flagged[n] != undefined">{{ getItemMetaData(_my_flagged[n]).type }}: {{ getItemMetaData(_my_flagged[n]).name }}</td>
+            <td *ngIf = "_my_flagged[n] == undefined">&nbsp;</td>
+          </tr>
+        </tbody>
 
-  <!-- <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div> -->
+      </table>
 
+    </div>
 
+  </div>
 
-  <!-- <ion-card>
+</div>
 
-
-    <ion-item href="#">
-      <ion-icon name="wine" slot="start"></ion-icon>
-      <ion-label>Card Link Item 2</ion-label>
-    </ion-item>
-
-    <ion-item class="ion-activated">
-      <ion-icon name="warning" slot="start"></ion-icon>
-      <ion-label>Card Button Item 1 activated</ion-label>
-    </ion-item>
-
-    <ion-item>
-      <ion-icon name="walk" slot="start"></ion-icon>
-      <ion-label>Card Button Item 2</ion-label>
-    </ion-item>
-  </ion-card> -->
 
 </ion-content>

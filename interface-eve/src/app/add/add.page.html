@@ -10,6 +10,29 @@
 
 
 <ion-card>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-0">
+    <a class="navbar-brand" [routerLink]="['../home']"><img src="/assets/SCBC_Logo.png" class="mn-5 p-0 img-logo"/></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#" [routerLink] = "['../add']">Add Item</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['../home']">Manage Inventories</a>
+        </li>
+        <li class="nav-item" *ngIf="isAdmin()">
+          <a class="nav-link" [routerLink] = "['../admin']">Admin</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Logout</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
     <ion-card-header>
       <ion-card-subtitle>Username</ion-card-subtitle>
     </ion-card-header>

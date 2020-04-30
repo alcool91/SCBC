@@ -29,3 +29,17 @@
 ion-content ion-toolbar {
   --background: translucent;
 }
+.img-logo {
+  margin-top: -27%;
+  margin-bottom: -27%;
+  margin-left: 1%;
+}
+.btn-group-xs > .btn, .btn-xs {
+    padding  : .25rem .4rem;
+    font-size  : .875rem;
+    line-height  : .5;
+    border-radius : .2rem;
+}
+.ml-6 {
+  margin-left: 6rem;
+}

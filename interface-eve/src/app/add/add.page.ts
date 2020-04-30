@@ -40,4 +40,8 @@ export class AddPage implements OnInit {
     }
     xhr.send(JSON.stringify({name: this._serial, type:this._type, image:this._image, description:this._description}));
   }
+  isAdmin() {
+    if((localStorage.getItem('user') == 'admin1')) { return true; }
+    return false;
+  }
 }

@@ -68,7 +68,7 @@ export class AdminPage implements OnInit, AfterViewInit {
           that._users_from_address[data[key]] = key;
           let on_chain = false;
           for(var i = 0; i < that._chain.length; i++) {
-            if(key.value == that._chain[i]) {
+            if(data[key] == that._chain[i]) {
               that._users_on_chain.push(key);
               on_chain = true;
             }
@@ -145,5 +145,9 @@ export class AdminPage implements OnInit, AfterViewInit {
     console.log(JSON.stringify(data));
     console.log(typeof JSON.stringify(data))
     xhr.send(JSON.stringify(data));
+  }
+  isAdmin() {
+    if((localStorage.getItem('user') == 'admin1')) { return true; }
+    return false;
   }
 }
