@@ -42,41 +42,51 @@ text ='default text';
       if(xhrr.readyState == 4) {
         console.log("received");
         let data = JSON.parse(xhrr.response);
-        if (data.length > that._max_array_size) {
-          that._max_array_size = data.length;
+        let _data_length=0;
+        for(var i = 0; i < data.length; i++) {
+          if(data[i] != '0') {
+            _data_length++;
+            that._my_received.push(data[i]);
+          }
+        }
+        if (_data_length > that._max_array_size) {
+          that._max_array_size = _data_length;
           that._numbers = Array(that._max_array_size).fill().map((x,i)=>i);
          }
-        for(var i = 0; i < data.length; i++) {
-          that._my_received.push(data[i]);
-        }
       }
     }
     xhri.onreadystatechange = function() {
       if(xhri.readyState == 4) {
-        console.log("FUNCTION CALLED");
+        console.log("inventory");
         let data = JSON.parse(xhri.response);
-        console.log(data);
-        if (data.length > that._max_array_size) {
-          that._max_array_size = data.length;
+        let _data_length=0;
+        for(var i = 0; i < data.length; i++) {
+          if(data[i] != '0') {
+            _data_length++;
+            that._my_inventory.push(data[i]);
+          }
+        }
+        if (_data_length > that._max_array_size) {
+          that._max_array_size = _data_length;
           that._numbers = Array(that._max_array_size).fill().map((x,i)=>i);
          }
-        for(var i = 0; i < data.length; i++) {
-          that._my_inventory.push(data[i]);
-          console.log("inventory");
-          console.log(that._my_inventory)
-        }
       }
     }
     xhrf.onreadystatechange = function() {
       if(xhrf.readyState == 4) {
+        console.log("flagged");
         let data = JSON.parse(xhrf.response);
-        if (data.length > that._max_array_size) {
-          that._max_array_size = data.length;
+        let _data_length=0;
+        for(var i = 0; i < data.length; i++) {
+          if(data[i] != '0') {
+            _data_length++;
+            that._my_flagged.push(data[i]);
+          }
+        }
+        if (_data_length > that._max_array_size) {
+          that._max_array_size = _data_length;
           that._numbers = Array(that._max_array_size).fill().map((x,i)=>i);
          }
-        for(var i = 0; i < data.length; i++) {
-          that._my_flagged.push(data[i]);
-        }
       }
     }
     xhrr.send();
@@ -92,6 +102,22 @@ text ='default text';
     let data = JSON.parse(raw_data);
     return data;
 
+  }
+  flagItem(_id) {
+    const that = this;
+    console.log("flag called");
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://localhost:8000/flagitem');
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function() {
+      if(xhr.readyState == 4) {
+        that.getInventories();
+      }
+    }
+    let result = { id: _id };
+    console.log(result);
+    console.log(JSON.stringify(result));
+    xhr.send(JSON.stringify(result));
   }
   goToSearch(){
   }

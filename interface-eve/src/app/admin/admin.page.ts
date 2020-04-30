@@ -48,8 +48,8 @@ export class AdminPage implements OnInit, AfterViewInit {
     // xhr.onreadystatechange = function() {
     //   if(xhr.readyState == 4) {
     xhr.send();
-        this._chain = JSON.parse(xhr.response);
-        console.log(this._chain);
+    this._chain = JSON.parse(xhr.response);
+    console.log(this._chain);
     //   }
     // }
     //xhr.send();
