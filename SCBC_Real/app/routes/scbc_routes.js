@@ -174,4 +174,13 @@ module.exports = function(app, db) {
       console.log(received);
       res.send(JSON.stringify(received));
     })
+    app.post("/flagitem", async (req, res) => {
+      let _id = req.body.id;
+      // console.log(req)
+      // console.log("req.body = ")
+      // console.log(req.body);
+      // console.log(_id);
+      supplyChainInstance.methods.flagItem(user_address, parseInt(_id)).send( { from: user_address });
+      res.send("Successfully flagged item");
+    })
 }
