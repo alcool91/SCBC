@@ -15,7 +15,7 @@
     "nodemon": "^2.0.3"
   },
   "scripts": {
-    "dev": "nodemon ./SCBC_Real/server.js"
+    "dev": "nodemon --ignore ./SCBC_Real/token_metadata --ignore ./user_data/ ./SCBC_Real/server.js"
   },
   "repository": {
     "type": "git",

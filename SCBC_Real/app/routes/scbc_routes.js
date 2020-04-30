@@ -136,6 +136,7 @@ module.exports = function(app, db) {
         data_array[i] = data_array[i].split(',');
         result[data_array[i][0]] = data_array[i][2];
       }
+      console.log(result);
       res.send(JSON.stringify(result));
     })
     app.post("/getchain", async (req, res) => {
@@ -151,5 +152,26 @@ module.exports = function(app, db) {
       result = await supplyChainInstance.methods.getChain().call();
       console.log(result);
       res.send("User at " + data.address + " successfully registered at position " + data.index);
+    })
+    app.post("/getreceived", async (req, res) => {
+      //let data = req.body;
+      let received;
+      received = await supplyChainInstance.methods.getReceived(user_address).call( { from: user_address });
+      console.log(received);
+      res.send(JSON.stringify(received));
+    })
+    app.post("/getinventory", async (req, res) => {
+      // let data = req.body;
+      let received;
+      received = await supplyChainInstance.methods.getInventory(user_address).call( { from: user_address });
+      console.log(received);
+      res.send(JSON.stringify(received));
+    })
+    app.post("/getflagged", async (req, res) => {
+      // let data = req.body;
+      let received;
+      received = await supplyChainInstance.methods.getFlagged(user_address).call( { from: user_address });
+      console.log(received);
+      res.send(JSON.stringify(received));
     })
 }
