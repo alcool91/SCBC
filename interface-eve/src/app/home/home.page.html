@@ -77,7 +77,7 @@ TO DO:
         </thead>
         <tbody>
           <tr *ngFor = "let n of _numbers">
-            <td *ngIf = "_my_inventory[n] != undefined">{{ getItemMetaData(_my_inventory[n]).type }}: {{ getItemMetaData(_my_inventory[n]).name }} <button type="button" class="btn btn-xs btn-danger ml-6" (click) = 'flagItem(_my_inventory[n])'><i class="fas fa-flag text-white"></i></button><button type="button" class="btn btn-xs btn-primary ml-1"><i class="fas fa-long-arrow-alt-right text-white"></i></button></td>
+            <td *ngIf = "_my_inventory[n] != undefined">{{ getItemMetaData(_my_inventory[n]).type }}: {{ getItemMetaData(_my_inventory[n]).name }} <button type="button" class="btn btn-xs btn-danger ml-6" (click) = 'flagItem(_my_inventory[n])'><i class="fas fa-flag text-white"></i></button><button type="button" class="btn btn-xs btn-primary ml-1" (click) = 'transferItem(_my_inventory[n])'><i class="fas fa-long-arrow-alt-right text-white"></i></button></td>
             <td *ngIf = "_my_inventory[n] == undefined">&nbsp;</td>
           </tr>
         </tbody>

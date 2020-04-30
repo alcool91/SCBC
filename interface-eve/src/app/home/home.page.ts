@@ -12,6 +12,7 @@ text ='default text';
   }
   _my_received=[]; _my_inventory=[]; _my_flagged=[];
   _max_array_size = 0; _numbers=[];
+  _chain = []; _chain_by_address = {};
   onChangeText(){
     this.text = 'Changed!';
   }
@@ -22,6 +23,19 @@ text ='default text';
   ngAfterViewInit() {
     console.log("AFTER VIEW");
     this.getInventories();
+    this.getChain();
+  }
+  getChain() {
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://localhost:8000/getchain', false);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send();
+    this._chain = JSON.parse(xhr.response);
+    console.log(this._chain);
+    for(var i = 0; i < this._chain.length; i++) {
+      this._chain_by_address[this._chain[i]] = i;
+    }
+    console.log(this._chain_by_address);
   }
   getInventories() {
     console.log("getInventories");
@@ -118,6 +132,22 @@ text ='default text';
     console.log(result);
     console.log(JSON.stringify(result));
     xhr.send(JSON.stringify(result));
+  }
+  transferItem(_id) {
+    const that = this;
+    let itemid = _id;
+    let fromaddress = localStorage.getItem('account');
+    let toaddress = this._chain[parseInt(this._chain_by_address[fromaddress]) + 1];
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://localhost:8000/transferitem');
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function() {
+      if(xhr.readyState == 4) {
+        alert(xhr.response);
+        that.getInventories();
+      }
+    }
+    xhr.send(JSON.stringify( { from: fromaddress, to: toaddress, id: itemid }));
   }
   goToSearch(){
   }
