@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
