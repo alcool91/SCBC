@@ -15,6 +15,7 @@ let supply_chain_abi_file, supply_chain_abi_data, supply_chain_abi, supplyChainI
 var user_address;
 
 
+
 async function loadItemContract() {
   item_abi_file = path.join(__dirname, "../../build/contracts/Item.json");
   item_abi_data = JSON.parse(fs.readFileSync(item_abi_file));
@@ -38,9 +39,9 @@ async function loadSupplyChainContract() {
   supplyChainInstance = new web3.eth.Contract(supply_chain_abi, supply_chain_address);
 
 }
-//These should normally be commented out, but are needed for testing APIs
-// loadItemContract();
-// loadSupplyChainContract();
+
+loadItemContract();
+loadSupplyChainContract();
 
 
 module.exports = function(app, db) {
@@ -51,10 +52,10 @@ module.exports = function(app, db) {
     });
     //app.use(cors());
     app.post("/createitem", async (req,res) => {
-      console.log("CREATE ITEM CALLED!!!!!!!!!!!")
       //req.body = token parameters, including name (serial #?)
       //create a json file file with token's metadata
       //web3.eth.getAccounts().then(console.log);
+      let from_user_address = req.body.from;
       if ((req.body.name == undefined) || (req.body.description == undefined) || (req.body.image == undefined)) { res.send("Please include name, description and image in request (these can be empty strings)"); }
       else {
         let id = await itemInstance.methods.totalSupply().call();//req.body.id.toString();
@@ -65,12 +66,12 @@ module.exports = function(app, db) {
         console.log(req.body);
         let data = JSON.stringify(req.body);
         console.log(data);
-        let _id = itemInstance.methods.mint(name, uri_path).send({ from: user_address, gas: 2000000 });
+        let _id = itemInstance.methods.mint(name, uri_path).send({ from: from_user_address, gas: 2000000 });
         console.log("_id " + _id );
         fs.writeFile(uri_path, data, (err) => {
           if (err) throw err;
         });
-        supplyChainInstance.methods.addItem(id).send({from: user_address});
+        supplyChainInstance.methods.addItem(id).send({from: from_user_address});
         res.send("Item Token Created Successfully!");
       }
     })
@@ -97,8 +98,6 @@ module.exports = function(app, db) {
             result.account = data_array[i][2];
             result.private_key = data_array[i][3];
             user_address = data_array[i][2];
-            loadItemContract();
-            loadSupplyChainContract();
           }
           else {
             result.verified = false;
@@ -147,8 +146,9 @@ module.exports = function(app, db) {
     })
     app.post("/registeruser", async (req, res) => {
       let data = req.body;
+      let from_user_address = req.body.from;
       //let data = JSON.parse(raw_data);
-      supplyChainInstance.methods.register(data.address, data.index).send( {from: user_address, gas: 2000000 });
+      supplyChainInstance.methods.register(data.address, data.index).send( {from: from_user_address, gas: 2000000 });
       result = await supplyChainInstance.methods.getChain().call();
       console.log(result);
       res.send("User at " + data.address + " successfully registered at position " + data.index);
@@ -156,36 +156,46 @@ module.exports = function(app, db) {
     app.post("/getreceived", async (req, res) => {
       //let data = req.body;
       let received;
-      received = await supplyChainInstance.methods.getReceived(user_address).call( { from: user_address });
+      let from_user_address = req.body.from;
+      received = await supplyChainInstance.methods.getReceived(user_address).call( { from: from_user_address });
       console.log(received);
       res.send(JSON.stringify(received));
     })
     app.post("/getinventory", async (req, res) => {
       // let data = req.body;
       let received;
-      received = await supplyChainInstance.methods.getInventory(user_address).call( { from: user_address });
+      let from_user_address = req.body.from
+      received = await supplyChainInstance.methods.getInventory(user_address).call( { from: from_user_address });
       console.log(received);
       res.send(JSON.stringify(received));
     })
     app.post("/getflagged", async (req, res) => {
       // let data = req.body;
       let received;
-      received = await supplyChainInstance.methods.getFlagged(user_address).call( { from: user_address });
+      let from_user_address = req.body.from;
+      received = await supplyChainInstance.methods.getFlagged(user_address).call( { from: from_user_address });
       console.log(received);
       res.send(JSON.stringify(received));
     })
     app.post("/flagitem", async (req, res) => {
       let _id = req.body.id;
-      await supplyChainInstance.methods.flagItem(user_address, parseInt(_id)).send( { from: user_address });
+      let from_user_address = req.body.from;
+      await supplyChainInstance.methods.flagItem(user_address, parseInt(_id)).send( { from: from_user_address });
       res.send("Successfully flagged item");
     })
     app.post("/transferitem", async (req, res) => {
       let _id = req.body.id;
       let _to_address = req.body.to;
       let _from_address = req.body.from;
-      await itemInstance.methods.transferFrom(_from_address,_to_address,_id).send( {from: user_address, gas: 2000000 });
-      await supplyChainInstance.methods.passItem(_from_address, _to_address, _id).send( {from: user_address, gas: 2000000 });
+      await itemInstance.methods.transferFrom(_from_address,_to_address,_id).send( {from: from_address, gas: 2000000 });
+      await supplyChainInstance.methods.passItem(_from_address, _to_address, _id).send( {from: from_address, gas: 2000000 });
       res.send("successfully transferred item to " + _to_address);
+    })
+    app.post("/confirmitem", async (req, res) => {
+      let _id = req.body.id;
+      let from_user_address = req.body.from;
+      await supplyChainInstance.methods.confirmItem(user_address, parseInt(_id)).send( { from: from_user_address });
+      res.send("Successfully confirmed item");
     })
 
 }

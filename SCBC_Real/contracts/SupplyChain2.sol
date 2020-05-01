@@ -108,6 +108,16 @@ contract SupplyChain2 {
         }
       }
     }
+    function confirmItem(address a, uint _id) public {
+      for(uint i = 0; i < nodeOf[a].received.length; i++) {
+        if(nodeOf[a].received[i] == _id) {
+          nodeOf[a].inventory.length++;
+          nodeOf[a].inventory[nodeOf[a].inventory.length-1] = _id;
+          nodeOf[a].received[i] = nodeOf[a].received[nodeOf[a].received.length-1];
+          delete nodeOf[a].received[nodeOf[a].received.length-1];
+        }
+      }
+    }
     function getInventory(address s) public onlyThis(s) returns (uint[] memory) {
         uint[] memory toReturn = new uint[](nodeOf[s].inventory.length);
         for(uint i = 0; i < nodeOf[s].inventory.length; i++){
