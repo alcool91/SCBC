@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddPage implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
   _serial = ''; _type=''; _image=''; _description='';
   getUser() {
     return localStorage.getItem('user');
@@ -38,10 +39,16 @@ export class AddPage implements OnInit {
         alert(xhr.response);
       }
     }
-    xhr.send(JSON.stringify({name: this._serial, type:this._type, image:this._image, description:this._description}));
+    xhr.send(JSON.stringify({from: localStorage.getItem('account'), name: this._serial, type:this._type, image:this._image, description:this._description}));
   }
   isAdmin() {
     if((localStorage.getItem('user') == 'admin1')) { return true; }
     return false;
+  }
+  logout() {
+    localStorage.removeItem('user');
+    localStorage.removeItem('account');
+    localStorage.removeItem('private_key');
+    this.router.navigate(['/login'])
   }
 }

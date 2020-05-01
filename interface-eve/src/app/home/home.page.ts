@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -8,7 +9,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 export class HomePage {
 text ='default text';
 
-  constructor() {
+  constructor(private router: Router) {
   }
   _my_received=[]; _my_inventory=[]; _my_flagged=[];
   _max_array_size = 0; _numbers=[];
@@ -20,16 +21,20 @@ text ='default text';
     if((localStorage.getItem('user') == 'admin1')) { return true; }
     return false;
   }
-  ngAfterViewInit() {
-    console.log("AFTER VIEW");
+  ngOnInit() {
     this.getInventories();
     this.getChain();
+  }
+  ngAfterViewInit() {
+    //console.log("AFTER VIEW");
+    // this.getInventories();
+    // this.getChain();
   }
   getChain() {
     let xhr = new XMLHttpRequest();
     xhr.open('POST', 'http://localhost:8000/getchain', false);
     xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send();
+    xhr.send(JSON.stringify({ from: localStorage.getItem('account')}));
     this._chain = JSON.parse(xhr.response);
     console.log(this._chain);
     for(var i = 0; i < this._chain.length; i++) {
@@ -54,7 +59,7 @@ text ='default text';
     xhrf.setRequestHeader('Content-Type', 'application/json');
     xhrr.onreadystatechange = function() {
       if(xhrr.readyState == 4) {
-        console.log("received");
+        //console.log("received");
         let data = JSON.parse(xhrr.response);
         let _data_length=0;
         for(var i = 0; i < data.length; i++) {
@@ -71,7 +76,7 @@ text ='default text';
     }
     xhri.onreadystatechange = function() {
       if(xhri.readyState == 4) {
-        console.log("inventory");
+        //console.log("inventory");
         let data = JSON.parse(xhri.response);
         let _data_length=0;
         for(var i = 0; i < data.length; i++) {
@@ -97,21 +102,22 @@ text ='default text';
             that._my_flagged.push(data[i]);
           }
         }
+        console.log(that._my_flagged);
         if (_data_length > that._max_array_size) {
           that._max_array_size = _data_length;
           that._numbers = Array(that._max_array_size).fill().map((x,i)=>i);
          }
       }
     }
-    xhrr.send();
-    xhri.send();
-    xhrf.send();
+    xhrr.send(JSON.stringify({ from: localStorage.getItem('account')}));
+    xhri.send(JSON.stringify({ from: localStorage.getItem('account')}));
+    xhrf.send(JSON.stringify({ from: localStorage.getItem('account')}));
   }
   getItemMetaData(_id) {
     let xhr = new XMLHttpRequest();
     xhr.open('POST', 'http://localhost:8000/getitemmetadata', false);
     xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send( JSON.stringify({ id: _id }));
+    xhr.send( JSON.stringify({ from: localStorage.getItem('account'),id: _id }));
     let raw_data = xhr.response;
     let data = JSON.parse(raw_data);
     return data;
@@ -128,9 +134,9 @@ text ='default text';
         that.getInventories();
       }
     }
-    let result = { id: _id };
+    let result = { from: localStorage.getItem('account'), id: _id };
     console.log(result);
-    console.log(JSON.stringify(result));
+    //console.log(JSON.stringify(result));
     xhr.send(JSON.stringify(result));
   }
   transferItem(_id) {
@@ -148,6 +154,28 @@ text ='default text';
       }
     }
     xhr.send(JSON.stringify( { from: fromaddress, to: toaddress, id: itemid }));
+  }
+  confirmItem(_id) {
+    const that = this;
+    console.log("confirm called");
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://localhost:8000/confirmitem');
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function() {
+      if(xhr.readyState == 4) {
+        that.getInventories();
+      }
+    }
+    let result = { from: localStorage.getItem('account'), id: _id };
+    console.log(result);
+    console.log(JSON.stringify(result));
+    xhr.send(JSON.stringify(result));
+  }
+  logout() {
+    localStorage.removeItem('user');
+    localStorage.removeItem('account');
+    localStorage.removeItem('private_key');
+    this.router.navigate(['/login'])
   }
   goToSearch(){
   }

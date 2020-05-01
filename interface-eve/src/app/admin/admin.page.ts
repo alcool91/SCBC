@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin',
@@ -13,7 +14,7 @@ export class AdminPage implements OnInit, AfterViewInit {
   @ViewChild('selManufacturer', { static: true }) public selManufacturer: ElementRef;
   @ViewChild('selRetailer', { static: true }) public selRetailer: ElementRef;
 
-  constructor() {  }
+  constructor(private router: Router) {  }
   _user=''; _password=''; _address=''; _private_key='';
   _current_fn=0;
   NUMFUNCTIONS=2
@@ -47,7 +48,7 @@ export class AdminPage implements OnInit, AfterViewInit {
     xhr.setRequestHeader('Content-Type', 'application/json');
     // xhr.onreadystatechange = function() {
     //   if(xhr.readyState == 4) {
-    xhr.send();
+    xhr.send(JSON.stringify({from: localStorage.getItem('account')}));
     this._chain = JSON.parse(xhr.response);
     console.log(this._chain);
     //   }
@@ -79,7 +80,7 @@ export class AdminPage implements OnInit, AfterViewInit {
         }
       }
     }
-    xhr.send();
+    xhr.send(JSON.stringify({from: localStorage.getItem('account')}));
   }
   adjustUserList(event: Event, _index) {
     let xhr = new XMLHttpRequest();
@@ -97,7 +98,7 @@ export class AdminPage implements OnInit, AfterViewInit {
         console.log(xhr.response);
       }
     }
-    xhr.send(JSON.stringify({ address: raw_event_data, index: _index}));
+    xhr.send(JSON.stringify({ from: localStorage.getItem('account'), address: raw_event_data, index: _index}));
     this._chain[_index] = raw_event_data;
   }
   getCurrentFn() {
@@ -130,6 +131,7 @@ export class AdminPage implements OnInit, AfterViewInit {
     xhr.setRequestHeader('Content-Type', 'application/json');
     let data = {};
     data.user = that._user;
+    data.from = localStorage.getItem('account');
     data.password = that._password;
     data.address = that._address;
     data.private_key = that._private_key;
@@ -149,5 +151,11 @@ export class AdminPage implements OnInit, AfterViewInit {
   isAdmin() {
     if((localStorage.getItem('user') == 'admin1')) { return true; }
     return false;
+  }
+  logout() {
+    localStorage.removeItem('user');
+    localStorage.removeItem('account');
+    localStorage.removeItem('private_key');
+    this.router.navigate(['/login'])
   }
 }
