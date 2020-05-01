@@ -58,7 +58,7 @@ TO DO:
         </thead>
         <tbody>
           <tr *ngFor = "let n of _numbers">
-            <td *ngIf="_my_received[n] != undefined">{{ getItemMetaData(_my_received[n]).type }}: {{ getItemMetaData(_my_received[n]).name }} <button type="button" class="btn btn-xs btn-danger float-right" (click) = "flagItem(_my_received[n])"><i class="fas fa-flag text-white"></i></button><button type="button" class="btn btn-xs btn-success ml-1" (click) = "confirmItem(_my_received[n])"><i class="fas fa-check text-white"></i></button></td>
+            <td *ngIf="_my_received[n] != undefined">{{ getItemMetaData(_my_received[n]).type }}: {{ getItemMetaData(_my_received[n]).name }} <button type="button" class="btn btn-xs btn-danger float-right" (click) = "flagItem(_my_received[n])"><i class="fas fa-flag text-white"></i></button><button type="button" class="btn btn-xs btn-success ml-1 float-right" (click) = "confirmItem(_my_received[n])"><i class="fas fa-check text-white"></i></button></td>
             <td *ngIf="_my_received[n] == undefined">&nbsp;</td>
           </tr>
         </tbody>

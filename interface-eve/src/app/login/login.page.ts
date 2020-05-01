@@ -27,7 +27,7 @@ export class LoginPage implements OnInit {
           localStorage.setItem("user", data.user);
           localStorage.setItem("account", data.account);
           localStorage.setItem("private_key", data.private_key);
-          that.router.navigate(['/home']);
+          window.location.href='/home';
         }
         else {
           document.getElementById("lblFail").innerHTML= 'Login Failed!';
