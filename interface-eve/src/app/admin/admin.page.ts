@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class AdminPage implements OnInit, AfterViewInit {
 
-  @ViewChild('selDesigner', { static: false }) public selDesigner: ElementRef;
+  @ViewChild('selDesigner') public selDesigner: ElementRef;
   @ViewChild('selFoundry', { static: true }) public selFoundry: ElementRef;
   @ViewChild('selAssembler', { static: true }) public selAssembler: ElementRef;
   @ViewChild('selManufacturer', { static: true }) public selManufacturer: ElementRef;
