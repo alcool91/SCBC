@@ -4,7 +4,7 @@
   "description": "Senior Design Project - Blockchain based supply chain security",
   "main": "index.js",
   "dependencies": {
-    "@openzeppelin/contracts": "^2.5.0",
+    "@openzeppelin/contracts": "^4.4.2",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
